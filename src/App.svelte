@@ -168,7 +168,7 @@
     justify-content: space-around;
     width: 100vw;
     height: 100vh;
-    background-image: url("sukno.jpg");
+    background-image: url("/sukno.jpg");
     background-size: cover;
   }
   .battle-container {
