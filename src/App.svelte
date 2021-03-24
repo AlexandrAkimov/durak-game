@@ -46,7 +46,9 @@
       toHisBattle = [...toHisBattle, detail];
       hisCards.set($hisCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
       step.set(false);
-      console.log('TO HIS BATTLE', toHisBattle);
+      if (!$hisCards.length && !bankCards.length) {
+        end = true; loser = true
+      }
   };
   const handleTakeHis = ({ detail }) => {
     hisCards.set(detail);
