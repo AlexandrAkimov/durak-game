@@ -131,7 +131,7 @@
   />
   <div class="battle-container">
     <BattleField {myBattleCards} {hisBattleCards} />
-    <Bank firstCard={$bankCards[0]} bank={$bankCards}/>
+    <Bank firstCard={$bankCards[0]} bank={$bankCards} kozyr={$kozyr}/>
   </div>
 
   <Me 
