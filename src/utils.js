@@ -3,7 +3,7 @@ export const addCard = (to, from, entity, bank) => {
         return
     }
     let cards
-    if (from.length < (6 - to.length)) {
+    if (from.length <= (6 - to.length)) {
         cards = from.slice(-from.length)
         entity.set([...to, ...cards])
         bank.set([])
