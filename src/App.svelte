@@ -48,6 +48,9 @@
         end = true; loser = false;
         return
       }
+      if (!$meCards.length) {
+        handleBito();
+      }
       step.set(true);
   };
   const hisStep = ({ detail }) => {

@@ -6,7 +6,7 @@
   export let attackCard = null;
   export let attackCards = [];
   export let meAttackCards = [];
-  export let me = false
+  export let me = false;
 
   const dispatch = createEventDispatcher();
   const notifications = getContext('notifications')
@@ -41,6 +41,7 @@
               notifications.info('Он взял!!! Ходи!')
           }
         } else {
+            
             let possibleCards = cards.filter((c, i) => {
               return [...meAttackCards, ...attackCards].some((ca) => c.value === ca.value)
             })
