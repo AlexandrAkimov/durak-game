@@ -21,6 +21,13 @@
 
   function start() {
     bankCards.set(shuffle(cards));
+    console.log($bankCards);
+
+    var valueArr = $bankCards.map(function(item){ return item.img });
+    var isDuplicate = valueArr.some(function(item, idx){ 
+      return valueArr.indexOf(item) != idx 
+    });
+    console.log(isDuplicate);
     hisCards.set($bankCards.slice(-6));
     meCards.set($bankCards.slice(24, 30));
     bankCards.set($bankCards.slice(0, 24));   

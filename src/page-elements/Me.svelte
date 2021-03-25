@@ -10,6 +10,12 @@
   export let kozyr = "";
   const dispatch = createEventDispatcher();
   const notifications = getContext("notifications");
+  const sort = (arr) => {
+    const sortType = arr.sort((a, b) => a.type.localeCompare(b.type));
+    const kos = sortType.filter(c => c.type === kozyr)
+    const nokos = sortType.filter(c => c.type !== kozyr)
+    return [...nokos, ...kos]
+  }
   const handleSelect = (card) => {
     if (attackCard && me) {
       if (card.type === kozyr) {
@@ -43,7 +49,7 @@
     <h4>{!me ? 'Ходи!' : 'Отбивайся!'}</h4>
   </div>
   <div class="cards">
-    {#each cards as card, i}
+    {#each sort(cards) as card, i}
       <div on:click={() => handleSelect(card)}>
         <img src={card.img} alt={cards.type + i} />
       </div>
