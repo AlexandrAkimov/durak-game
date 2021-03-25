@@ -21,13 +21,19 @@
 
   function start() {
     bankCards.set(shuffle(cards));
+    console.log('start bank', $bankCards);
     hisCards.set($bankCards.slice(-6));
+    console.log('his', $hisCards);
     meCards.set($bankCards.slice(24, 30));
+    console.log('me', $meCards);
     bankCards.set($bankCards.slice(0, 24));
+    console.log('start bank', $bankCards);
+   
     kozyr.set($bankCards[0].type);
     byStep.set(false)
     step.set(false)
     toHisBattle = []
+    
   }
   start()
 
