@@ -11,7 +11,7 @@
   import Snackbar from "./page-elements/Snackbar.svelte";
   import { setContext } from "svelte";
 
-  let end = false;
+  let end = true;
   let loser = false;
   let toMyBattle = [];
   let toHisBattle = [];
@@ -44,7 +44,7 @@
   const myStep = ({ detail }) => {
       toMyBattle = [...toMyBattle, detail];
       meCards.set($meCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
-      if (!$meCards.length && !bankCards.length) {
+      if (!$meCards.length && !$bankCards.length) {
         end = true; loser = false;
         return
       }
@@ -53,8 +53,9 @@
   const hisStep = ({ detail }) => {
     toHisBattle = [...toHisBattle, detail];
     hisCards.set($hisCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
-    if (!$hisCards.length && !bankCards.length) {
-      end = true; loser = true
+    console.log();
+    if (!$hisCards.length && !$bankCards.length) {
+      end = true; loser = true;
     }
     step.set(false);
   };
@@ -77,7 +78,7 @@
       step.set(true);
       byStep.set(true);
     }, 250);
-    if (!$hisCards.length && !bankCards.length) {
+    if (!$hisCards.length && !$bankCards.length) {
       end = true; loser = true
     }
     
