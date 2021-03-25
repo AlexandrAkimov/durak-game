@@ -21,28 +21,22 @@
 
   function start() {
     bankCards.set(shuffle(cards));
-    console.log('start bank', $bankCards);
     hisCards.set($bankCards.slice(-6));
-    console.log('his', $hisCards);
     meCards.set($bankCards.slice(24, 30));
-    console.log('me', $meCards);
-    bankCards.set($bankCards.slice(0, 24));
-    console.log('start bank', $bankCards);
-   
+    bankCards.set($bankCards.slice(0, 24));   
     kozyr.set($bankCards[0].type);
     byStep.set(false)
     step.set(false)
-    toHisBattle = []
-    
+    toHisBattle = [];
+    toMyBattle = [];
+    end = false
   }
   start()
 
 
   const myStep = ({ detail }) => {
       toMyBattle = [...toMyBattle, detail];
-      console.log(detail);
       meCards.set($meCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
-      console.log($meCards.length);
       if (!$meCards.length && !bankCards.length) {
         end = true; loser = false;
         return
@@ -50,12 +44,12 @@
       step.set(true);
   };
   const hisStep = ({ detail }) => {
-      toHisBattle = [...toHisBattle, detail];
-      hisCards.set($hisCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
-      if (!$hisCards.length && !bankCards.length) {
-        end = true; loser = true
-      }
-      step.set(false);
+    toHisBattle = [...toHisBattle, detail];
+    hisCards.set($hisCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
+    if (!$hisCards.length && !bankCards.length) {
+      end = true; loser = true
+    }
+    step.set(false);
   };
   const handleTakeHis = ({ detail }) => {
     hisCards.set(detail);
@@ -85,8 +79,6 @@
     toMyBattle = []; toHisBattle = [];
     addCard($meCards, $bankCards, meCards, bankCards)
     addCard($hisCards, $bankCards, hisCards, bankCards)
-    console.log('bankCards', $bankCards);
-    console.log($step);
     byStep.set(true);
     step.set(true);
   }
@@ -119,10 +111,7 @@
   });
   $: myBattleCards = toMyBattle;
   $: hisBattleCards = toHisBattle;
-  $: if(!end) {
-
-    start()
-  }
+  
 </script>
 
 <div class="body">
@@ -156,7 +145,7 @@
   <Actions bind:hisBattleCards bind:step={$step} on:bito={handleBito} on:take={handleTakeMe}/>
 </div>
 {#if end}
-  <Modal bind:end {loser}/>
+  <Modal bind:end {loser} on:start={start}/>
 {/if}
 <div class="relative">
   {#if notification}

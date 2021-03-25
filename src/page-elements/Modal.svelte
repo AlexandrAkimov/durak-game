@@ -1,10 +1,11 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
     export let loser = false
-    export let end = true
 </script>
 <div class="modal">
     <h3 class:loser><span>{!loser ? 'Молодец!' : 'Эх!'}</span></h3>
-    <button class="btn" on:click={() => end = false}>Ещё?</button>
+    <button class="btn" on:click={() => dispatch('start')}>Ещё?</button>
 </div>
 <style>
     .modal {

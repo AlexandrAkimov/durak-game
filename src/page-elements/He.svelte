@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, getContext } from "svelte";
   export let cards = [];
   export let kozyr = '';
   export let step = false;
@@ -9,7 +9,7 @@
   export let me = false
 
   const dispatch = createEventDispatcher();
-
+  const notifications = getContext('notifications')
   let hisCardsInKol = [];
   $: if (step) {
         if (attackCard && !me) {
@@ -38,6 +38,7 @@
           } else {
               step = false;
               dispatch('take', [...cards, ...attackCards, ...hisCardsInKol])
+              notifications.info('Он взял!!! Ходи!')
           }
         } else {
             let possibleCards = cards.filter((c, i) => {
@@ -60,6 +61,7 @@
             } else {
               step = false;
               dispatch('changeStep');
+              notifications.info('Ты отбился, ходи!')
             }
             
         }
