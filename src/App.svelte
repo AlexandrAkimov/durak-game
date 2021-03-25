@@ -43,18 +43,19 @@
       console.log(detail);
       meCards.set($meCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
       console.log($meCards.length);
-      step.set(true);
       if (!$meCards.length && !bankCards.length) {
         end = true; loser = false;
+        return
       }
+      step.set(true);
   };
   const hisStep = ({ detail }) => {
       toHisBattle = [...toHisBattle, detail];
       hisCards.set($hisCards.filter((c) => !(detail.value === c.value && detail.type === c.type)));
-      step.set(false);
       if (!$hisCards.length && !bankCards.length) {
         end = true; loser = true
       }
+      step.set(false);
   };
   const handleTakeHis = ({ detail }) => {
     hisCards.set(detail);
