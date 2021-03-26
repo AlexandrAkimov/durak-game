@@ -72,4 +72,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
   }
+  img {
+    border-radius: 4px;
+  }
 </style>

@@ -24,4 +24,7 @@
     .his-field, .me-field {
         justify-content: space-between;
     }
+    img {
+        border-radius: 4px;
+    }
 </style>

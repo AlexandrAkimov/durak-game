@@ -70,14 +70,24 @@
 </script>
 
 <div class="container">
-  <div class="cards">
+  <div class="label"><h4>Противник</h4></div>
+  <div class="cards big">
     {#each cards as card, i}
       <img src="cards/rubashka.bmp" alt={cards.type + i} />
     {/each}
   </div>
+  <div class="cards small">
+    <div class="rubashka"><span style="color: green;font-weight:bold;font-size:30px">{cards.length}</span></div>
+  </div>
 </div>
 
 <style>
+  .label {
+    display: flex;
+    width: 100%;
+    color: oldlace;
+    justify-content: center;
+  }
   .container {
     padding: 1rem;
   }
@@ -85,5 +95,33 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+  }
+  .small {
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  .rubashka {
+    background-image: url('/cards/rubashka.bmp');
+    width: 70px;
+    height: 140px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  img {
+    border-radius: 4px;
+  }
+  @media (max-width: 400px) {
+    .small {
+      display: flex;
+
+    }
+    .big {
+      display: none;
+    }
   }
 </style>
