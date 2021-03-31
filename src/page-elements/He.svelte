@@ -37,7 +37,10 @@
             dispatch("hisstep", card);
           } else {
               step = false;
-              dispatch('take', [...cards, ...attackCards, ...hisCardsInKol])
+              dispatch('take', {
+                all: [...cards, ...attackCards, ...hisCardsInKol],
+                battle: [...attackCards, ...hisCardsInKol]
+              })
               notifications.info('Он взял!!! Ходи!')
           }
         } else {

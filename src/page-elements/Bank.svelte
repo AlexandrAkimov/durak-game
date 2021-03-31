@@ -70,7 +70,7 @@
     position: absolute;
     right: -50%;
     bottom: 50%;
-    z-index: 3;
+    /* z-index: 3; */
   }
   .small {
     display: none;

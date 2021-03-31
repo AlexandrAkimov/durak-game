@@ -10,8 +10,15 @@
   import Modal from "./page-elements/Modal.svelte";
   import Snackbar from "./page-elements/Snackbar.svelte";
   import { setContext } from "svelte";
+  import YetCards from "./page-elements/YetCards.svelte";
 
-  let end = true;
+  let end = false;
+  let anotherPut = false;
+  
+  let yetCards = [{ value: 8, type: 'b', img: 'cards/3b.bmp'}, { value: 8, type: 'c', img: 'cards/3c.bmp'},
+    { value: 8, type: 'x', img: 'cards/3k.bmp'}, { value: 8, type: 'p', img: 'cards/3p.bmp'},
+
+    { value: 9, type: 'b', img: 'cards/4b.bmp'}, { value: 9, type: 'c', img: 'cards/4c.bmp'},];
   let loser = false;
   let toMyBattle = [];
   let toHisBattle = [];
@@ -21,13 +28,6 @@
 
   function start() {
     bankCards.set(shuffle(cards));
-    console.log($bankCards);
-
-    var valueArr = $bankCards.map(function(item){ return item.img });
-    var isDuplicate = valueArr.some(function(item, idx){ 
-      return valueArr.indexOf(item) != idx 
-    });
-    console.log(isDuplicate);
     hisCards.set($bankCards.slice(-6));
     meCards.set($bankCards.slice(24, 30));
     bankCards.set($bankCards.slice(0, 24));   
@@ -36,7 +36,8 @@
     step.set(false)
     toHisBattle = [];
     toMyBattle = [];
-    end = false
+    end = false;
+    //anotherPut = false;
   }
   start()
 
@@ -63,13 +64,29 @@
     step.set(false);
   };
   const handleTakeHis = ({ detail }) => {
-    hisCards.set(detail);
-    addCard($meCards, $bankCards, meCards, bankCards)
+    hisCards.set(detail.all);
+    yetCards = $meCards.filter(c => {
+      return [...myBattleCards, ...hisBattleCards].some(ca => c.value === ca.value)
+    })
+    if (yetCards.length) {
+      anotherPut = true
+    } else {
+      addCard($meCards, $bankCards, meCards, bankCards)
+    }
     step.set(false);
     toMyBattle = [];
     toHisBattle = [];
     byStep.set(false);
   };
+  const addYet = ({detail}) => {
+    hisCards.set([...$hisCards, ...detail]);
+    const ost = $meCards.filter(c => {
+      return !detail.some(ca => ca.img === c.img)
+    })
+    meCards.set(ost)
+    addCard($meCards, $bankCards, meCards, bankCards)
+    anotherPut = false
+  }
   const handleTakeMe = ({ detail }) => {
     meCards.set([...$meCards, ...hisBattleCards, ...myBattleCards])
     toMyBattle = [];
@@ -157,6 +174,13 @@
 </div>
 {#if end}
   <Modal bind:end {loser} on:start={start}/>
+{/if}
+{#if anotherPut}
+  <YetCards 
+    cards={yetCards} 
+    on:addYet={addYet} 
+    on:closeYet={() => {addCard($meCards, $bankCards, meCards, bankCards);anotherPut = false}}
+  />
 {/if}
 <div class="relative">
   {#if notification}
